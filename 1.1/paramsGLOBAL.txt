@@ -1,0 +1,162 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% XBeach parameter settings input file                                     %%%
+%%% This file is created for NAMIDANCE - XBeach Coupling                     %%%
+%%% Editted parameters: tintp,tintg,tstart,npoints,npointvar,nglobalvar      %%%
+%%% Other parameters should be edited manually                               %%%
+%%% date: 19-Oct-2021 15:22:27                                               %%%
+%%% Function: params.m and outputEditorGUI                                   %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+wavemodel = nonh
+
+%%% Bed composition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+rhos = 2600
+por = 0.400000
+D50 = 0.00018
+
+%%% Flow boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+epsi = 0
+secorder = 1
+solver = sip
+
+%%% Flow numerics parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+eps = 0.000001
+umin = 0
+hmin = 0.
+
+%%% Flow parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+bedfriction = manning
+bedfriccoef = 0.005
+nuh = 0.100000
+nuhfac = 1
+gwflow = 0
+maxbrsteep = 0.4
+nhbreaker = 0
+
+%%% Grid parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+gridform = xbeach
+vardx = 1
+xfile = x.grd
+yfile = y.grd
+%%% dx = 1
+%%% dy = 1
+nx = 286
+ny = 365
+nz = 0
+depfile = bed.dep
+posdwn = 1
+%%% thetamin = -80
+%%% thetamax = 80
+%%% dtheta = 160
+
+%%% Model time %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+tstop = 720
+dtset = 0.0001
+%%% CFL = 0.01
+
+%%% Morphology parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+morfac = 1
+morfacopt  = 1
+morstart   = 30
+wetslp = 0.3
+dryslp = 1
+hswitch = 0.1
+dzmax = 0.05
+%%% struct = 1
+%%% ne_layer = sediThickness.dep
+
+%%% Physical constants %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+g = 9.810000
+rho = 1025
+
+%%% Roller parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% roller = 1
+beta = 0.100000
+%%% rfb = 1
+
+%%% Sediment transport parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% waveform = vanthiel
+form = soulsby_vanrijn
+%%% facua  = 0.100000
+%%% turb = 2
+Tsmin  = 1
+
+%%% Tide boundary conditions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%% tideloc = 1
+%%%% zs0file = tide.txt
+
+%%% Wave boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+wbctype = ts_nonh
+front = nonh_1d
+arc = 1
+
+%%% Wave breaking parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% break = 3
+%%% gamma = 0.78
+%%% alpha = 1
+%%% n = 10
+%%% delta = 0
+
+%%% Wave-spectrum boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% bcfile = filelist.txt
+
+%%% Output variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+tintp = 0.001
+tintg = 10
+tstart = 0
+outputformat = netcdf
+
+%%% Point Coordinates %%%
+npoints = 10
+3.5	0.575
+6.5	0.575
+9	0.575
+10.5	0.575
+12	0.575
+13.05	0.575
+14.05	0.575
+15.5	0.575
+9	0.44
+9	0.71
+
+%%% Point Variables %%%
+npointvar = 10
+zs
+u
+zb
+ccg
+cctot
+sedero
+ue
+ur
+ust
+uu
+
+%%% Global Variables %%%
+ 
+zb
+d
+dsflskl
+dfsdşllş
+dalas
+dşaşs
+sşs
+
+ 
+%%% End of File %%%
+
