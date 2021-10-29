@@ -1,2 +1,0 @@
-Added an option to select interpolation and extrapolation methods for Boun_U.bcf creation
-Running XBeach directly from the GUI
