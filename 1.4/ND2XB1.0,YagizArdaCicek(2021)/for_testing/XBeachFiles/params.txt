@@ -1,0 +1,139 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% XBeach parameter settings input file (Yagiz Arda Cicek, 2021)            %%%
+%%% This file is created for NAMIDANCE - XBeach Coupling                     %%%
+%%% Editted parameters: struct and ne_layer                                  %%%
+%%% Other parameters should be edited manually                               %%%
+%%% date: 08-Dec-2021 12:25:22                                               %%%
+%%% Function: params.m & nonErodibleGUI                                      %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Physical Processes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+wavemodel = nonh
+sedtrans = 1
+gwflow = 0
+
+%%% Grid parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+gridform = xbeach
+nx = 286
+ny = 365
+posdwn = 1
+depfile = bed.dep
+vardx = 1
+xfile = x.grd
+yfile = y.grd
+nz = 1
+
+%%% Model time parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+tstop = 1200
+CFL = 0.5
+%%% dtset = 0.0001
+
+%%% Physical constants %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+g = 9.810000
+rho = 1025
+
+%%% Wave boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+wbctype = ts_nonh
+
+%%% Flow boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+front = nonh_1d
+arc = 1
+epsi = 0
+
+%%% Discharge boundary conditions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+beta = 0.100000
+
+%%% Flow parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+bedfriction = manning
+bedfriccoef = 0.01
+nuh = 0.100000
+nuhfac = 1
+
+%%% Non-hydrostatic correction parameters: %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+solver = sip
+nonhq3d = 1
+nhbreaker = 0
+nhlay =.3300
+
+%%% Sediment transport parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+form = soulsby_vanrijn
+Tsmin  = 1
+
+%%% Bed composition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+por = 0.400000
+D50 = 0.00018
+%%% D90 = 0.0003
+rhos = 2600
+
+%%% Morphology parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+morfac = 1
+morfacopt  = 1
+morstart   = 30
+wetslp = 0.3
+dryslp = 1
+hswitch = 0.1
+dzmax = 0.05
+
+
+ 
+%%% Hard Structures %%%
+ 
+%%% struct = 1
+%%% ne_layer = sediThickness.dep
+ 
+%%% Flow numerics parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+eps = 0.001
+eps_sd = 0
+umin = 0
+hmin = 0.
+secorder = 1
+
+%%% Wave breaking parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% break = 3
+%%% gamma = 0.78
+%%% alpha = 1
+%%% n = 10
+%%% delta = 0
+
+%%% Wave-spectrum boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% bcfile = filelist.txt
+
+%%% Output variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+tintp = 1
+tintg = 1
+tstart = 0
+outputformat = netcdf
+
+%%% Point Coordinates %%%
+
+npoints = 2
+Add gauge coordinates here line by line, delimited by space (X - Y) (delete this line):
+1 1
+
+%%% Point Variables %%%
+
+npointvar = 1
+Add variables here line by line (delete this line):
+
+%%% Global Variables %%%
+
+nglobalvar = 1
+Add variables here line by line (delete this line):
+
+%%% End of File %%%
+

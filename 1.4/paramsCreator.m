@@ -1,0 +1,199 @@
+function paramsCreator(fileName, outputFileNames, writeToFile,tStop)
+
+[~,~,~, ncols, nrows,~] = xBeachGridCreator(fileName, outputFileNames, writeToFile);
+%% Change the input values if you desire (DO NOT DELETE A LINE OR CHANGE LINE ORDER!)
+
+%% Backing-up existing files to the folder named \oldFiles
+backupDate = string(datetime('now'));
+backupDate = strrep(backupDate,":","-");
+
+if isfile("XBeachFiles\"+"params.txt") || isfile("XBeachFiles\"+outputFileNames(1,1)+".dep") || isfile("XBeachFiles\"+outputFileNames(2,1)+".grd") || isfile("XBeachFiles\"+outputFileNames(3,1)+".grd") || isfile("XBeachFiles\"+"Boun_U.bcf")
+    mkdir latestBackup
+end
+
+if isfile("XBeachFiles\"+"\params.txt")
+    namePARAMS = "params.txt";
+    newNamePARAMS = backupDate+namePARAMS;
+    movefile("XBeachFiles\"+namePARAMS,"latestBackup\"+newNamePARAMS);
+end
+
+if isfile("XBeachFiles\"+outputFileNames(1,1)+".dep")
+    nameDEP = outputFileNames(1,1)+".dep";
+    newNameDEP = backupDate+outputFileNames(1,1)+".grd";
+    movefile("XBeachFiles\"+nameDEP,"latestBackup\"+newNameDEP);
+end
+
+if isfile("XBeachFiles\"+outputFileNames(2,1)+".grd")
+    nameXGRD = outputFileNames(2,1)+".grd";
+    newNameXGRD = backupDate+outputFileNames(2,1)+".grd";
+    movefile("XBeachFiles\"+nameXGRD,"latestBackup\"+newNameXGRD);
+end
+
+if isfile("XBeachFiles\"+outputFileNames(3,1)+".grd")
+    nameYGRD = outputFileNames(3,1)+".grd";
+    newNameYGRD = backupDate+outputFileNames(3,1)+".grd";
+    movefile("XBeachFiles\"+nameYGRD,"latestBackup\"+newNameYGRD);
+end
+
+if isfile("XBeachFiles\"+"Boun_U.bcf")
+    nameBOUN = "Boun_U.bcf";
+    newNameBOUN = backupDate+nameBOUN;
+    movefile("XBeachFiles\"+nameBOUN,"latestBackup\"+newNameBOUN);
+end
+
+paramstxt = ["%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "%%% XBeach parameter settings input file (Yagiz Arda Cicek, 2021)            %%%";
+    "%%% This file is created for NAMIDANCE - XBeach Coupling                     %%%";
+    "%%% Editted parameters: xfile, yfile, nx, ny, depfile                        %%%";
+    "%%% Other parameters should be edited manually                               %%%";
+    "%%% Date: 18-Oct-2021 15:05:36                                               %%%";
+    "%%% Function: params.m                                                       %%%";
+    "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "%%% Physical Processes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "wavemodel = nonh"; % To activate non-hydrostatic module (do not change!)
+    "sedtrans = 0"; % Turn on/off sediment transport
+    "gwflow = 0"; % Turn on groundwater flow
+    "";
+    "%%% Grid parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "gridform = xbeach"; % Grid definition format
+    "nx = 430"; % Number of computational cell corners in x-direction (defined automatically by params.m)
+    "ny = 43"; % Number of computational cell corners in y-direction (defined automatically by params.m)
+    "posdwn = 1"; % Bathymetry is specified positive down (1) or positive up (-1)
+    "depfile = bed.dep"; % Name of the input bathymetry file (defined automatically by params.m)
+    "vardx = 1"; % Switch for variable grid spacing
+    "xfile = x.grd"; % Name of the file containing x-coordinates of the calculation grid
+    "yfile = y.grd"; % Name of the file containing y-coordinates of the calculation grid
+    "nz = 1"; % Number of computational cells in z-direction
+    "";
+    "%%% Model time parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "tstop = 720"; % Stop time of simulation, in morphological time (s)
+    "CFL = 0.5"; % Maximum courant-friedrichs-lewy number
+    "%%% dtset = 0.0001"; % Fixed timestep, overrides use of CFL (s)
+    "";
+    "%%% Physical constants %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "g = 9.810000"; % Gravitational constant (m/s2)
+    "rho = 1025"; % Density of water (kg/m3)
+    "";
+    "%%% Wave boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "wbctype = ts_nonh"; % New wave boundary condition type (do not change!)
+    "";
+    "%%% Flow boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "front = nonh_1d"; % Switch for seaward flow boundary (suggested by nonh manual)
+    "arc = 1"; % Switch for active reflection compensation at seaward boundary (suggested by nonh manual)
+    "epsi = 0"; % Ratio of mean current to time varying current through offshore boundary
+    "";
+    "%%% Discharge boundary conditions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "beta = 0.100000"; % Breaker slope coefficient in roller model
+    "";
+    "%%% Flow parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "bedfriction = manning"; % Bed friction formulation ([chezy, cf, white-colebrook, manning, white-colebrook-grainsize])
+    "bedfriccoef = 0.01"; % Bed friction coefficient
+    "nuh = 0.100000"; % Horizontal background viscosity (m2/s)
+    "nuhfac = 1"; % Viscosity switch for roller induced turbulent horizontal viscosity
+    "";
+    "%%% Non-hydrostatic correction parameters: %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "solver = sip"; % Solver used to solve the linear system (for 1D simulations -> tridiag, for 2D simulations -> sip suggested by nonh manual)
+    "nonhq3d = 1"; % Turn on or off the the reduced two-layer nonhydrostatic model, default = 0 (= 1 is better for ridiculous fluctuations)
+    "nhbreaker = 0"; % Non-hydrostatic breaker model
+    "nhlay =.3300"; % Layer distribution in the nonhydrostatic model
+    "";
+    "%%% Sediment transport parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "form = soulsby_vanrijn"; % Equilibrium sediment concentration formulation [soulsby_vanrijn, vanthiel_vanrijn, vanrijn1993]
+    "Tsmin  = 1"; % Minimum adaptation time scale in advection diffusion equation sediment (default: 0.5)
+    "";
+    "%%% Bed composition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "por = 0.400000"; % Sediment porosity
+    "D50 = 0.00018"; % Median grain size (m)
+    "%%% D90 = 0.0003"; 
+    "rhos = 2600"; % Density of sediment (kg/m3)
+    "";
+    "%%% Morphology parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "morfac = 1"; % Morphological acceleration factor
+    "morfacopt  = 1"; % Switch to adjusting output times for morfac
+    "morstart   = 30"; % Start time morphology, in morphological time (s)
+    "wetslp = 0.3"; % Critical avalanching slope under water (dz/dx and dz/dy) (default: 0.3) (this value can generate water disturbances if too small)
+    "dryslp = 1"; % Critical avalanching slope above water (dz/dx and dz/dy) (default: 1.0)
+    "hswitch = 0.1"; % Water depth at which is switched from wetslp to dryslp
+    "dzmax = 0.05"; % Maximum bed level change due to avalanching
+    "";
+    "%%% Hard Structures %%%";
+    "";
+    "%%% struct = 1"; % Switch for enabling hard structures
+    "%%% ne_layer = sediThickness.dep"; % Name of file containing thickness of the erodible layer (struct = 1)
+    "";
+    "%%% Flow numerics parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "eps = 0.001"; % Threshold water depth above which cells are considered wet (m)
+	"eps_sd = 0"; % Threshold velocity difference to determine conservation of energy head versus momentum
+    "umin = 0"; % Threshold velocity for upwind velocity detection and for vmag2 in equilibrium sediment concentration (m/s)
+    "hmin = 0."; % Threshold water depth above which stokes drift is included (m)
+    "secorder = 1"; % Use second order corrections to advection/non-linear terms based on maccormack scheme (suggested by nonh manual)
+    "";
+    "%%% Wave breaking parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "%%% break = 3";
+    "%%% gamma = 0.78";
+    "%%% alpha = 1";
+    "%%% n = 10";
+    "%%% delta = 0";
+    "";
+    "%%% Wave-spectrum boundary condition parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "%%% bcfile = filelist.txt";
+    "";
+    "%%% Output variables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%";
+    "";
+    "tintp = 0.001"; % Interval time of point and runup gauge output (s)
+    "tintg = 10"; % Interval time of global output (s)
+    "tstart = 0"; % Start time of output, in morphological time
+    "outputformat = netcdf"; % Output file format
+    "";
+    "%%% Point Coordinates %%%";
+    "";
+    "%%% Point Variables %%%";
+%     "npointvar = 10"; % Number of point output variables (should be compatible with the number of variables given below)
+%     "zs"; % Water level
+%     "u"; % Glm velocity in cell centre, x-component
+%     "zb"; % Bed level
+%     "ccg"; % Depth-averaged suspended concentration for each sediment fraction
+%     "cctot"; % Sediment concentration integrated over bed load and suspended and for all sediment grains
+%     "sedero"; % Cum. sedimentation/erosion
+%     "ue"; % Eulerian velocity in cell centre, x-component
+%     "ur"; % Reflected velocity at bnds in u-points
+%     "ust"; % Stokes drift
+%     "uu"; % Glm velocity in u-points, x-component
+    "";
+    "%%% Global Variables %%%";
+    "nglobalvar = 4"; % Number of global output variables (should be compatible with the number of variables given below)
+    "zs"; % Water level
+    "u"; % Glm velocity in cell centre, x-component
+    "zb"; % Bed level
+    "sedero"; %Cum. sedimentation/erosion
+    "%%% End of File %%%";
+    ""];
+
+date = string(datetime('now'));
+paramstxt(6,1) = "%%% date: "+date+"                                               %%%";
+paramstxt(23,1) = "xfile = " + outputFileNames(2,1) + ".grd";
+paramstxt(24,1) = "yfile = " + outputFileNames(3,1) + ".grd";
+paramstxt(18,1) = "nx = " + string(ncols - 1);
+paramstxt(19,1) = "ny = " + string(nrows - 1);
+paramstxt(21,1) = "depfile = " + outputFileNames(1,1) + ".dep";
+paramstxt(29,1) = "tstop = " + string(tStop);
+
+
+writematrix(paramstxt, "params.txt",'QuoteStrings',0)
+
+end
